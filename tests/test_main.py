@@ -2,12 +2,12 @@ from ticktick_importer.main import TickTickTask, extract_tasks_from_opml
 
 
 def test_extract_tasks():
-    tasks = extract_tasks_from_opml("tests/data/sample.opml")
+    tasks = extract_tasks_from_opml("tests/data/dynalist_sample.opml")
     expected_tasks = [
         {
             TickTickTask.FOLDER_NAME: "",
             TickTickTask.LIST_NAME: "",
-            TickTickTask.TITLE: "write a parser in python to import from dynalist to ticktick",
+            TickTickTask.TITLE: "regular task with subtasks",
             TickTickTask.KIND: "",
             TickTickTask.TAGS: "",
             TickTickTask.CONTENT: "",
@@ -33,10 +33,10 @@ def test_extract_tasks():
         {
             TickTickTask.FOLDER_NAME: "",
             TickTickTask.LIST_NAME: "",
-            TickTickTask.TITLE: "arregla reposapiés taburete",
+            TickTickTask.TITLE: "daily recurring task",
             TickTickTask.KIND: "",
             TickTickTask.TAGS: "",
-            TickTickTask.CONTENT: "asdf\nasdfd",
+            TickTickTask.CONTENT: "multiline\ndescription",
             TickTickTask.IS_CHECK_LIST: "",
             TickTickTask.START_DATE: "",
             TickTickTask.DUE_DATE: "2025-03-12T23:00:00+0000",
@@ -72,8 +72,8 @@ def test_extract_tasks():
 # ( 6) "Content" - "with description" 👍
 # ( 7) "Is Check list" - "N" 👍
 # ( 8) "Start Date" - "2025-03-16T17:00:00+0000" 👍
-# ( 9) "Due Date" - "2025-03-16T17:00:00+0000"
-# (10) "Reminder" - "PT0S"
+# ( 9) "Due Date" - "2025-03-16T17:00:00+0000" 👍
+# (10) "Reminder" - "PT0S" 👍
 # (11) "Repeat" - ""
 # (12) "Priority" - "5"
 # (13) "Status" - "0"

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="2.0">
+  <head>
+    <title></title>
+    <flavor>dynalist</flavor>
+    <source>https://dynalist.io</source>
+    <ownerName>ABC</ownerName>
+    <ownerEmail>abc@whatever.com</ownerEmail>
+  </head>
+  <body>
+    <outline text="-Hoy  (^D)" heading="2">
+      <outline text="!(2025-03-15) regular task with subtasks">
+        <outline text="subtask 1"/>
+        <outline text="subtask 2"/>
+      </outline>
+      <outline text=" !(2025-03-12| 1d) daily recurring task " _note="multiline&#10;description"/>
+    </outline>
+  </body>
+</opml>

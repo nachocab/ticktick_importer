@@ -32,13 +32,23 @@ class TickTickTask(StrEnum):
 
 
 DYNALIST_ITEM_PATTERN = re.compile(
-    r"\s*"  # Optional leading whitespace
-    r"(?:(\d+)\s+)?"  # Optional importance
-    r"(?:!\("  # Opening date and recurrence
+    r"\s*"
+    r"(?:"
+    r"(\d+)\s*"  # importance
+    r")?"
+    #
+    r"(?:"
+    r"!\("
     r"(\d{4}-\d{2}-\d{2})\s*"  # date
-    r"(?:\|\s*"  # Optional recurrence
-    r"([^)]*)\s*)?"  # recurrence
-    r"\)\s*)?"  # Closing date and recurrence
+    #
+    r"(?:"
+    r"\|\s*"
+    r"([^)]+)\s*"  # recurrence
+    r")?"
+    #
+    r"\)\s*"
+    r")?"
+    #
     r"(.*)"  # Title
 )
 
@@ -66,7 +76,7 @@ def get_dynalist_task(text: str) -> dict:
     if recurrence:
         result[DynalistTask.RECURRENCE] = recurrence
     if title:
-        result[DynalistTask.TITLE] = title
+        result[DynalistTask.TITLE] = title.strip()
 
     return result
 
@@ -82,13 +92,9 @@ def extract_tasks_from_opml(file_path):
         text = element.get("text", "")
         note = element.get("_note", "")
 
-        if text.startswith("!("):
-            # text = text.split(") ")[1]  # Remove the date and time from the title
-
+        if bool(re.match(r"\s*!\(", text)):
             dynalist_task = get_dynalist_task(text)
-
             # parent = element.xpath("..")[0]  # Direct parent
-            # parent_text = parent.get("text", "None") if parent.tag == "outline" else "None"
 
             task = {
                 TickTickTask.FOLDER_NAME: "",
