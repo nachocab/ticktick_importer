@@ -18,7 +18,7 @@ def test_extract_tasks():
             {
                 TickTickTaskName.LIST_NAME: "-Hoy  (^D)",
                 TickTickTaskName.TITLE: "regular task with subtasks",
-                TickTickTaskName.DUE_DATE: "2025-03-15T23:00:00+0000",
+                TickTickTaskName.DUE_DATE: "2025-03-15T20:00:00+0000",
                 TickTickTaskName.CONTENT: ""
                 "subtask 1\n"
                 "subtask 2\n"
@@ -33,7 +33,7 @@ def test_extract_tasks():
                 TickTickTaskName.LIST_NAME: "-Hoy  (^D)",
                 TickTickTaskName.TITLE: "daily recurring task",
                 TickTickTaskName.CONTENT: "multiline\ndescription",
-                TickTickTaskName.DUE_DATE: "2025-03-12T23:00:00+0000",
+                TickTickTaskName.DUE_DATE: "2025-03-12T20:00:00+0000",
                 TickTickTaskName.REPEAT: "FREQ=DAILY;INTERVAL=1",
             }
         ),

@@ -9,27 +9,32 @@ DYNALIST_ITEM_PATTERN = re.compile(
     (?:
         (
             \d+ # importance
-        )\s*
+        )
+        \s*
     )?
 
     (?:
         !\(
             (
                 \d{4}-\d{2}-\d{2} # date
-            )\s*
+            )
+            \s*
 
             (?:
                 \|\s*
                 (
                     [^)]+ # recurrence
-                )\s*
+                )
+                \s*
             )?
-        \)\s*
+        \)
     )?
+    \s*
 
     (
         .* # Title
     )
+    \s*
     """,
     flags=re.DOTALL | re.VERBOSE,
 )
@@ -109,7 +114,7 @@ class DynalistTask:
     def get_hour_from_importance(importance: str) -> str:
         match importance:
             case None:
-                return "23"
+                return "20"
 
             case imp if int(imp) < 10:
                 return "08"
