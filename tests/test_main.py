@@ -18,7 +18,7 @@ def test_extract_tasks():
             {
                 TickTickTaskName.TITLE: "regular task with subtasks",
                 TickTickTaskName.DUE_DATE: "2025-03-15T23:00:00+0000",
-                TickTickTaskName.CONTENT: "subtask 1\nsubtask 2",
+                TickTickTaskName.CONTENT: "- subtask 1\n- subtask 2",
             }
         ),
         TickTickTask(

@@ -51,7 +51,7 @@ class DynalistTask:
         if children := element.getchildren():
             self.content[DynalistTaskName.DESCRIPTION] = (
                 f"{self.content.get( DynalistTaskName.DESCRIPTION, "")}"
-                f"{"\n".join(child.get("text") for child in children)}"
+                f"{"\n".join(f"- {child.get("text")}" for child in children)}"
             )
 
         if importance:
