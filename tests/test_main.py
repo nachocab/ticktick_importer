@@ -1,11 +1,8 @@
-from ticktick_importer.ticktick_task import TickTickTask, TickTickTaskName
-from ticktick_importer.main import (
-    process_dynalist_tasks,
-)
+from ticktick_task import TickTickTask, TickTickTaskName
 
 
 def test_extract_tasks():
-    ticktick_tasks = process_dynalist_tasks("tests/data/dynalist_sample.opml")
+    ticktick_tasks = TickTickTask.from_opml_file("tests/data/dynalist_sample.opml")
     expected = [
         TickTickTask(
             {

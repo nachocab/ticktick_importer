@@ -1,7 +1,9 @@
 from enum import StrEnum
 from xml.etree.ElementTree import Element
-from ticktick_importer.dynalist_task import DynalistTask, DynalistTaskName
-from ticktick_importer.get_current_date import (
+
+from lxml import etree
+from dynalist_task import DynalistTask, DynalistTaskName
+from get_current_date import (
     get_current_date,
 )
 from typing import Optional
@@ -85,3 +87,15 @@ class TickTickTask:
                     ),
                 }
             )
+
+    @staticmethod
+    def from_opml_file(opml_file_path: str) -> list["TickTickTask"]:
+        parser = etree.XMLParser(recover=True)
+        tree = etree.parse(opml_file_path, parser)
+        dynalist_tasks = tree.getroot().xpath(".//outline")[0].getchildren()
+
+        return [
+            ticktick_task
+            for dynalist_task in dynalist_tasks
+            if (ticktick_task := TickTickTask.from_dynalist_task(dynalist_task))
+        ]
