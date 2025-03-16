@@ -2,10 +2,13 @@ from src.ticktick_task import TickTickTask, TickTickTaskName
 
 
 def test_extract_tasks():
-    ticktick_tasks = TickTickTask.from_dynalist_opml_file("tests/data/dynalist_sample.opml")
+    ticktick_tasks = TickTickTask.from_dynalist_opml_file(
+        "tests/data/dynalist_sample.opml", list_name="-Hoy  (^D)"
+    )
     expected = [
         TickTickTask(
             {
+                TickTickTaskName.LIST_NAME: "-Hoy  (^D)",
                 TickTickTaskName.TITLE: "recurrent task mon/tue, early due time",
                 TickTickTaskName.DUE_DATE: "2025-03-15T08:00:00+0000",
                 TickTickTaskName.REPEAT: "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,TU",
@@ -13,6 +16,7 @@ def test_extract_tasks():
         ),
         TickTickTask(
             {
+                TickTickTaskName.LIST_NAME: "-Hoy  (^D)",
                 TickTickTaskName.TITLE: "regular task with subtasks",
                 TickTickTaskName.DUE_DATE: "2025-03-15T23:00:00+0000",
                 TickTickTaskName.CONTENT: ""
@@ -26,6 +30,7 @@ def test_extract_tasks():
         ),
         TickTickTask(
             {
+                TickTickTaskName.LIST_NAME: "-Hoy  (^D)",
                 TickTickTaskName.TITLE: "daily recurring task",
                 TickTickTaskName.CONTENT: "multiline\ndescription",
                 TickTickTaskName.DUE_DATE: "2025-03-12T23:00:00+0000",
@@ -34,6 +39,7 @@ def test_extract_tasks():
         ),
         TickTickTask(
             {
+                TickTickTaskName.LIST_NAME: "-Hoy  (^D)",
                 TickTickTaskName.TITLE: "task with image [Pasted image](https://dynalist.io/u/NGyjalPi7yK-jAouOSB5RC-E)",
             }
         ),

@@ -27,7 +27,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert Dynalist OPML to TickTick CSV.")
     parser.add_argument("-i", "--input", help="Path to the Dynalist OPML file")
     parser.add_argument("-o", "--output", help="Path to the TickTick CSV output file")
+    parser.add_argument("-l", "--list-name", help="TickTick List Name")
     args = parser.parse_args()
 
-    ticktick_tasks = TickTickTask.from_dynalist_opml_file(args.input)
+    ticktick_tasks = TickTickTask.from_dynalist_opml_file(args.input, args.list_name)
     write_csv(args.output, ticktick_tasks)

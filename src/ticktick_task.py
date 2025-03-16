@@ -36,7 +36,7 @@ class TickTickTaskName(StrEnum):
 
 DEFAULT_TICKTICK_TASK = {
     TickTickTaskName.FOLDER_NAME: "",
-    TickTickTaskName.LIST_NAME: "Personal",
+    TickTickTaskName.LIST_NAME: "",
     TickTickTaskName.TITLE: "",
     TickTickTaskName.KIND: "",
     TickTickTaskName.TAGS: "",
@@ -73,10 +73,11 @@ class TickTickTask:
                 self.content[key] = value
 
     @staticmethod
-    def from_dynalist_element(element: Element) -> Optional["TickTickTask"]:
+    def from_dynalist_element(element: Element, list_name: str) -> Optional["TickTickTask"]:
         if dynalist_task := DynalistTask(element):
             return TickTickTask(
                 {
+                    TickTickTaskName.LIST_NAME: list_name,
                     TickTickTaskName.TITLE: dynalist_task.content.get(DynalistTaskName.TITLE),
                     TickTickTaskName.DUE_DATE: dynalist_task.content.get(DynalistTaskName.DUE_DATE),
                     TickTickTaskName.REPEAT: dynalist_task.content.get(DynalistTaskName.RECURRENCE),
@@ -87,13 +88,14 @@ class TickTickTask:
             )
 
     @staticmethod
-    def from_dynalist_opml_file(opml_file_path: str) -> list["TickTickTask"]:
+    def from_dynalist_opml_file(opml_file_path: str, list_name: str) -> list["TickTickTask"]:
         parser = etree.XMLParser(recover=True)
         tree = etree.parse(opml_file_path, parser)
+
         dynalist_tasks = tree.getroot().xpath(".//outline")[0].getchildren()
 
         return [
             ticktick_task
             for dynalist_task in dynalist_tasks
-            if (ticktick_task := TickTickTask.from_dynalist_element(dynalist_task))
+            if (ticktick_task := TickTickTask.from_dynalist_element(dynalist_task, list_name))
         ]
