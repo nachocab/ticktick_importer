@@ -1,6 +1,7 @@
 import argparse
 import csv
 
+from date_utils import get_iso_date_tz
 from ticktick_task import TickTickTask, TickTickTaskName
 
 
@@ -8,12 +9,12 @@ def write_csv(file_path: str, ticktick_tasks: list[TickTickTask]) -> None:
     with open(file_path, mode="w", newline="", encoding="utf-8") as file:
         file.writelines(
             [
-                "Date: 2025-03-16+0000\n"
-                "Version: 7.1\n"
-                "Status:\n"
+                f'"Date: {get_iso_date_tz()}"\n'
+                '"Version: 7.1"\n'
+                '"Status:\n'
                 "0 Normal\n"
                 "1 Completed\n"
-                "2 Archived\n"
+                '2 Archived"\n'
             ]
         )
         writer = csv.DictWriter(file, fieldnames=list(TickTickTaskName))

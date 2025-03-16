@@ -3,9 +3,7 @@ from xml.etree.ElementTree import Element
 
 from lxml import etree
 from dynalist_task import DynalistTask, DynalistTaskName
-from get_current_date import (
-    get_current_date,
-)
+from date_utils import get_iso_datetime
 from typing import Optional
 
 
@@ -50,7 +48,7 @@ DEFAULT_TICKTICK_TASK = {
     TickTickTaskName.REPEAT: "",
     TickTickTaskName.PRIORITY: "",
     TickTickTaskName.STATUS: "0",
-    TickTickTaskName.CREATED_TIME: get_current_date(),
+    TickTickTaskName.CREATED_TIME: get_iso_datetime(),
     TickTickTaskName.COMPLETED_TIME: "",
     TickTickTaskName.ORDER: "",
     TickTickTaskName.TIMEZONE: "Europe/Madrid",

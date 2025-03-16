@@ -23,6 +23,8 @@ DYNALIST_ITEM_PATTERN = re.compile(
     r"(.*)"  # Title
 )
 
+TAB = "    "
+
 
 class DynalistTaskName(StrEnum):
     IMPORTANCE = "importance"
@@ -50,7 +52,7 @@ class DynalistTask:
 
         if children := element.getchildren():
             self.content[DynalistTaskName.DESCRIPTION] = (
-                f"{self.content.get( DynalistTaskName.DESCRIPTION, "")}"
+                f"{self.content.get(DynalistTaskName.DESCRIPTION, "")}"
                 f"{self.to_nested_markdown_list(children)}"
             )
 
@@ -65,20 +67,24 @@ class DynalistTask:
         if recurrence:
             self.content[DynalistTaskName.RECURRENCE] = self.get_icalendar_rrule(recurrence)
 
-        if title:
-            self.content[DynalistTaskName.TITLE] = title.replace("👟", "").strip()
+        self.content[DynalistTaskName.TITLE] = self.format_title(title)
+
+    @staticmethod
+    def format_title(title: str) -> str:
+        return title.replace("👟", "").replace("![", "[").strip()
 
     @staticmethod
     def to_nested_markdown_list(elements) -> str:
         def to_markdown_list(elements, level=0):
             markdown = ""
             for element in elements:
-                markdown += f"{'  ' * level}- {element.get('text')}\n"
+                title = DynalistTask.format_title(element.get("text"))
+                markdown += f"{TAB * level}{title}\n"
 
                 if note := element.get("_note"):
                     notes = note.split("\n")
                     for note in notes:
-                        markdown += f"{'  ' * (level)}{note}\n"
+                        markdown += f"{TAB * (level)}{DynalistTask.format_title(note)}\n"
 
                 if children := element.getchildren():
                     markdown += to_markdown_list(children, level + 1)

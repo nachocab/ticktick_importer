@@ -13,11 +13,12 @@
       <outline text="!(2025-03-15) regular task with subtasks">
         <outline text="subtask 1"/>
         <outline text="subtask 2">
-          <outline text="subtask 2a" _note="multi&#10;note"/>
+          <outline text="subtask 2a ![Pasted image](https://dynalist.io/u/NGyjalPi7yK-jAouOSB5RC-E)" _note="multi&#10;note"/>
           <outline text="subtask 2b"/>
         </outline>
       </outline>
       <outline text=" !(2025-03-12| 1d) daily recurring task " _note="multiline&#10;description"/>
+      <outline text="task with image ![Pasted image](https://dynalist.io/u/NGyjalPi7yK-jAouOSB5RC-E)">
     </outline>
   </body>
 </opml>

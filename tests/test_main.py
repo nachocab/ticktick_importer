@@ -1,4 +1,4 @@
-from ticktick_task import TickTickTask, TickTickTaskName
+from src.ticktick_task import TickTickTask, TickTickTaskName
 
 
 def test_extract_tasks():
@@ -16,12 +16,12 @@ def test_extract_tasks():
                 TickTickTaskName.TITLE: "regular task with subtasks",
                 TickTickTaskName.DUE_DATE: "2025-03-15T23:00:00+0000",
                 TickTickTaskName.CONTENT: ""
-                "- subtask 1\n"
-                "- subtask 2\n"
-                "  - subtask 2a\n"
-                "  multi\n"
-                "  note\n"
-                "  - subtask 2b\n",
+                "subtask 1\n"
+                "subtask 2\n"
+                "    subtask 2a [Pasted image](https://dynalist.io/u/NGyjalPi7yK-jAouOSB5RC-E)\n"
+                "    multi\n"
+                "    note\n"
+                "    subtask 2b\n",
             }
         ),
         TickTickTask(
@@ -30,6 +30,11 @@ def test_extract_tasks():
                 TickTickTaskName.CONTENT: "multiline\ndescription",
                 TickTickTaskName.DUE_DATE: "2025-03-12T23:00:00+0000",
                 TickTickTaskName.REPEAT: "FREQ=DAILY;INTERVAL=1",
+            }
+        ),
+        TickTickTask(
+            {
+                TickTickTaskName.TITLE: "task with image [Pasted image](https://dynalist.io/u/NGyjalPi7yK-jAouOSB5RC-E)",
             }
         ),
     ]
