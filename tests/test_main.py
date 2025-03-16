@@ -1,67 +1,37 @@
-from ticktick_importer.main import TickTickTask, extract_tasks_from_opml
+from ticktick_importer.main import TickTickTask, extract_tasks_from_opml, get_ticktick_task
 
 
 def test_extract_tasks():
-    tasks = extract_tasks_from_opml("tests/data/dynalist_sample.opml")
-    expected_tasks = [
-        {
-            TickTickTask.FOLDER_NAME: "",
-            TickTickTask.LIST_NAME: "",
-            TickTickTask.TITLE: "regular task with subtasks",
-            TickTickTask.KIND: "",
-            TickTickTask.TAGS: "",
-            TickTickTask.CONTENT: "",
-            TickTickTask.IS_CHECK_LIST: "",
-            TickTickTask.START_DATE: "",
-            TickTickTask.DUE_DATE: "2025-03-15T23:00:00+0000",
-            TickTickTask.REMINDER: "",
-            TickTickTask.REPEAT: "",
-            TickTickTask.PRIORITY: "",
-            TickTickTask.STATUS: "",
-            TickTickTask.CREATED_TIME: "",
-            TickTickTask.COMPLETED_TIME: "",
-            TickTickTask.ORDER: "",
-            TickTickTask.TIMEZONE: "",
-            TickTickTask.IS_ALL_DAY: "",
-            TickTickTask.IS_FLOATING: "",
-            TickTickTask.COLUMN_NAME: "",
-            TickTickTask.COLUMN_ORDER: "",
-            TickTickTask.VIEW_MODE: "",
-            TickTickTask.TASK_ID: "",
-            TickTickTask.PARENT_ID: "",
-        },
-        {
-            TickTickTask.FOLDER_NAME: "",
-            TickTickTask.LIST_NAME: "",
-            TickTickTask.TITLE: "daily recurring task",
-            TickTickTask.KIND: "",
-            TickTickTask.TAGS: "",
-            TickTickTask.CONTENT: "multiline\ndescription",
-            TickTickTask.IS_CHECK_LIST: "",
-            TickTickTask.START_DATE: "",
-            TickTickTask.DUE_DATE: "2025-03-12T23:00:00+0000",
-            TickTickTask.REMINDER: "",
-            TickTickTask.REPEAT: "",
-            TickTickTask.PRIORITY: "",
-            TickTickTask.STATUS: "",
-            TickTickTask.CREATED_TIME: "",
-            TickTickTask.COMPLETED_TIME: "",
-            TickTickTask.ORDER: "",
-            TickTickTask.TIMEZONE: "",
-            TickTickTask.IS_ALL_DAY: "",
-            TickTickTask.IS_FLOATING: "",
-            TickTickTask.COLUMN_NAME: "",
-            TickTickTask.COLUMN_ORDER: "",
-            TickTickTask.VIEW_MODE: "",
-            TickTickTask.TASK_ID: "",
-            TickTickTask.PARENT_ID: "",
-        },
+    ticktick_tasks = extract_tasks_from_opml("tests/data/dynalist_sample.opml")
+    expected = [
+        get_ticktick_task(
+            {
+                TickTickTask.TITLE: "recurrent task mon/tue, early due time",
+                TickTickTask.DUE_DATE: "2025-03-15T08:00:00+0000",
+                TickTickTask.REPEAT: "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,TU",
+            }
+        ),
+        get_ticktick_task(
+            {
+                TickTickTask.TITLE: "regular task with subtasks",
+                TickTickTask.DUE_DATE: "2025-03-15T23:00:00+0000",
+            }
+        ),
+        get_ticktick_task(
+            {
+                TickTickTask.TITLE: "daily recurring task",
+                TickTickTask.CONTENT: "multiline\ndescription",
+                TickTickTask.DUE_DATE: "2025-03-12T23:00:00+0000",
+                TickTickTask.REPEAT: "FREQ=DAILY;INTERVAL=1",
+            }
+        ),
     ]
 
-    assert len(tasks) == len(expected_tasks)
+    assert len(ticktick_tasks) == len(expected)
 
-    for object, index in zip(tasks, range(len(tasks))):
-        assert object == expected_tasks[index]
+    for ticktick_task, index in zip(ticktick_tasks, range(len(ticktick_tasks))):
+        assert ticktick_task is not None
+        assert ticktick_task == expected[index]
 
 
 # ( 1) "Folder Name" - "" 👍
@@ -74,8 +44,8 @@ def test_extract_tasks():
 # ( 8) "Start Date" - "2025-03-16T17:00:00+0000" 👍
 # ( 9) "Due Date" - "2025-03-16T17:00:00+0000" 👍
 # (10) "Reminder" - "PT0S" 👍
-# (11) "Repeat" - ""
-# (12) "Priority" - "5"
+# (11) "Repeat" - "" 👍
+# (12) "Priority" - "5" 👍
 # (13) "Status" - "0"
 # (14) "Created Time" - "2025-03-15T15:16:38+0000"
 # (15) "Completed Time" - ""

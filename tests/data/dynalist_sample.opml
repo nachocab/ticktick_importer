@@ -9,6 +9,7 @@
   </head>
   <body>
     <outline text="-Hoy  (^D)" heading="2">
+      <outline text="0 !(2025-03-15 |1w12) recurrent task mon/tue, early due time" />
       <outline text="!(2025-03-15) regular task with subtasks">
         <outline text="subtask 1"/>
         <outline text="subtask 2"/>
