@@ -3,24 +3,35 @@ from enum import StrEnum
 import re
 
 DYNALIST_ITEM_PATTERN = re.compile(
-    r"\s*"
-    r"(?:"
-    r"(\d+)\s*"  # importance
-    r")?"
-    #
-    r"(?:"
-    r"!\("
-    r"(\d{4}-\d{2}-\d{2})\s*"  # date
-    #
-    r"(?:"
-    r"\|\s*"
-    r"([^)]+)\s*"  # recurrence
-    r")?"
-    #
-    r"\)\s*"
-    r")?"
-    #
-    r"(.*)"  # Title
+    r"""
+    \s*
+
+    (?:
+        (
+            \d+ # importance
+        )\s*
+    )?
+
+    (?:
+        !\(
+            (
+                \d{4}-\d{2}-\d{2} # date
+            )\s*
+
+            (?:
+                \|\s*
+                (
+                    [^)]+ # recurrence
+                )\s*
+            )?
+        \)\s*
+    )?
+
+    (
+        .* # Title
+    )
+    """,
+    flags=re.DOTALL | re.VERBOSE,
 )
 
 TAB = "    "
@@ -40,10 +51,11 @@ class DynalistTask:
     def __init__(self, element):
         self.content = {}
 
-        match = re.fullmatch(DYNALIST_ITEM_PATTERN, element.get("text"))
+        text = element.get("text")
+        match = re.fullmatch(DYNALIST_ITEM_PATTERN, text)
 
         if not match:
-            raise ValueError(f"Invalid task: {element.get('text')}")
+            raise ValueError(f"Invalid task: {text}")
 
         importance, due_date, recurrence, title = match.groups()
 

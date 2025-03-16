@@ -9,7 +9,7 @@ def test_extract_tasks():
         TickTickTask(
             {
                 TickTickTaskName.LIST_NAME: "-Hoy  (^D)",
-                TickTickTaskName.TITLE: "recurrent task mon/tue, early due time",
+                TickTickTaskName.TITLE: "recurrent task\nmon/tue, early due time",
                 TickTickTaskName.DUE_DATE: "2025-03-15T08:00:00+0000",
                 TickTickTaskName.REPEAT: "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,TU",
             }

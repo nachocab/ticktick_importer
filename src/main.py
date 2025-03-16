@@ -1,5 +1,6 @@
 import argparse
 import csv
+from pathlib import Path
 
 from date_utils import get_iso_date_tz
 from ticktick_task import TickTickTask, TickTickTaskName
@@ -25,10 +26,15 @@ def write_csv(file_path: str, ticktick_tasks: list[TickTickTask]) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert Dynalist OPML to TickTick CSV.")
-    parser.add_argument("-i", "--input", help="Path to the Dynalist OPML file")
-    parser.add_argument("-o", "--output", help="Path to the TickTick CSV output file")
-    parser.add_argument("-l", "--list-name", help="TickTick List Name")
+    parser.add_argument(
+        "-i", "--input", type=Path, required=True, help="Path to the Dynalist OPML file"
+    )
+    parser.add_argument(
+        "-o", "--output", type=Path, required=True, help="Path to the TickTick CSV output file"
+    )
+    parser.add_argument("-l", "--list-name", required=True, help="TickTick List Name")
     args = parser.parse_args()
 
     ticktick_tasks = TickTickTask.from_dynalist_opml_file(args.input, args.list_name)
     write_csv(args.output, ticktick_tasks)
+    print(f"Extracted {len(ticktick_tasks)} tasks to {args.output.name}")
