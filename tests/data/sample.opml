@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="2.0">
+  <head>
+    <title></title>
+    <flavor>dynalist</flavor>
+    <source>https://dynalist.io</source>
+    <ownerName>ABC</ownerName>
+    <ownerEmail>abc@whatever.com</ownerEmail>
+  </head>
+  <body>
+    <outline text="-Hoy  (^D)" heading="2">
+      <outline text="!(2025-03-15) write a parser in python to import from dynalist to ticktick">
+        <outline text="Use python tests"/>
+        <outline text="read the ticktick guide: https://help.ticktick.com/articles/7055781405648748544"/>
+        <outline text="figure out how to link to other tasks"/>
+      </outline>
+      <outline text="!(2025-03-12) arregla reposapiés taburete" _note="asdf&#10;asdfd"/>
+    </outline>
+  </body>
+</opml>
