@@ -2,7 +2,7 @@ from ticktick_task import TickTickTask, TickTickTaskName
 
 
 def test_extract_tasks():
-    ticktick_tasks = TickTickTask.from_opml_file("tests/data/dynalist_sample.opml")
+    ticktick_tasks = TickTickTask.from_dynalist_opml_file("tests/data/dynalist_sample.opml")
     expected = [
         TickTickTask(
             {
@@ -15,7 +15,13 @@ def test_extract_tasks():
             {
                 TickTickTaskName.TITLE: "regular task with subtasks",
                 TickTickTaskName.DUE_DATE: "2025-03-15T23:00:00+0000",
-                TickTickTaskName.CONTENT: "- subtask 1\n- subtask 2",
+                TickTickTaskName.CONTENT: ""
+                "- subtask 1\n"
+                "- subtask 2\n"
+                "  - subtask 2a\n"
+                "  multi\n"
+                "  note\n"
+                "  - subtask 2b\n",
             }
         ),
         TickTickTask(

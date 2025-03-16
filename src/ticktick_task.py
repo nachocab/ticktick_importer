@@ -38,7 +38,7 @@ class TickTickTaskName(StrEnum):
 
 DEFAULT_TICKTICK_TASK = {
     TickTickTaskName.FOLDER_NAME: "",
-    TickTickTaskName.LIST_NAME: "📥Inbox task list",
+    TickTickTaskName.LIST_NAME: "Personal",
     TickTickTaskName.TITLE: "",
     TickTickTaskName.KIND: "",
     TickTickTaskName.TAGS: "",
@@ -75,7 +75,7 @@ class TickTickTask:
                 self.content[key] = value
 
     @staticmethod
-    def from_dynalist_task(element: Element) -> Optional["TickTickTask"]:
+    def from_dynalist_element(element: Element) -> Optional["TickTickTask"]:
         if dynalist_task := DynalistTask(element):
             return TickTickTask(
                 {
@@ -89,7 +89,7 @@ class TickTickTask:
             )
 
     @staticmethod
-    def from_opml_file(opml_file_path: str) -> list["TickTickTask"]:
+    def from_dynalist_opml_file(opml_file_path: str) -> list["TickTickTask"]:
         parser = etree.XMLParser(recover=True)
         tree = etree.parse(opml_file_path, parser)
         dynalist_tasks = tree.getroot().xpath(".//outline")[0].getchildren()
@@ -97,5 +97,5 @@ class TickTickTask:
         return [
             ticktick_task
             for dynalist_task in dynalist_tasks
-            if (ticktick_task := TickTickTask.from_dynalist_task(dynalist_task))
+            if (ticktick_task := TickTickTask.from_dynalist_element(dynalist_task))
         ]

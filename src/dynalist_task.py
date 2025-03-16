@@ -51,7 +51,7 @@ class DynalistTask:
         if children := element.getchildren():
             self.content[DynalistTaskName.DESCRIPTION] = (
                 f"{self.content.get( DynalistTaskName.DESCRIPTION, "")}"
-                f"{"\n".join(f"- {child.get("text")}" for child in children)}"
+                f"{self.to_nested_markdown_list(children)}"
             )
 
         if importance:
@@ -66,7 +66,26 @@ class DynalistTask:
             self.content[DynalistTaskName.RECURRENCE] = self.get_icalendar_rrule(recurrence)
 
         if title:
-            self.content[DynalistTaskName.TITLE] = title.strip()
+            self.content[DynalistTaskName.TITLE] = title.replace("👟", "").strip()
+
+    @staticmethod
+    def to_nested_markdown_list(elements) -> str:
+        def to_markdown_list(elements, level=0):
+            markdown = ""
+            for element in elements:
+                markdown += f"{'  ' * level}- {element.get('text')}\n"
+
+                if note := element.get("_note"):
+                    notes = note.split("\n")
+                    for note in notes:
+                        markdown += f"{'  ' * (level)}{note}\n"
+
+                if children := element.getchildren():
+                    markdown += to_markdown_list(children, level + 1)
+
+            return markdown
+
+        return to_markdown_list(elements)
 
     @staticmethod
     def get_hour_from_importance(importance: str) -> str:
